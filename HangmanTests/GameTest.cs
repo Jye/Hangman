@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Model;
 
 namespace HangmanTests
 {
@@ -45,49 +46,49 @@ namespace HangmanTests
             Assert.AreEqual("B*bb**", game.RevealedState);
         }
 
-        //[TestMethod]
-        //public void GuessingCorrectLetterShouldNotDecrementRemainingAttempts()
-        //{
-        //    Game game = new Game("Dinosaur", 5, '*');
-        //    Assert.AreEqual(5, game.RemainingAttempts);
-        //    Assert.IsTrue(game.GuessLetter('d'));
-        //    Assert.AreEqual(5, game.RemainingAttempts);
-        //}
+        [TestMethod]
+        public void GuessingCorrectLetterShouldNotDecrementRemainingAttempts()
+        {
+            Game game = new Game("Dinosaur", 5, '*');
+            Assert.AreEqual(5, game.RemainingAttempts);
+            Assert.IsTrue(game.GuessLetter('d'));
+            Assert.AreEqual(5, game.RemainingAttempts);
+        }
 
-        //[TestMethod]
-        //public void GuessingWordCorrectlyShouldRevealWord()
-        //{
-        //    Game game = new Game("Brother", 5, '*');
-        //    Assert.IsTrue(game.Guess("Brother"));
-        //    Assert.AreEqual("Brother", game.RevealedState);
-        //}
+        [TestMethod]
+        public void GuessingWordCorrectlyShouldRevealWord()
+        {
+            Game game = new Game("Brother", 5, '*');
+            Assert.IsTrue(game.Guess("Brother"));
+            Assert.AreEqual("Brother", game.RevealedState);
+        }
 
-        //[TestMethod]
-        //public void GuessingWordCorrectlyShouldScoreNumberOfLettersInWordMultipliedByRemainingAttempts()
-        //{
-        //    Game game = new Game("Brother", 5, '*');
-        //    game.GuessLetter('b');
-        //    game.GuessLetter('r');            
-        //    game.Guess("Brother");
-        //    Assert.AreEqual(21, game.Score);
-        //}
+        [TestMethod]
+        public void GuessingWordCorrectlyShouldScoreNumberOfLettersInWordMultipliedByRemainingAttempts()
+        {
+            Game game = new Game("Brother", 5, '*');
+            game.GuessLetter('b');
+            game.GuessLetter('r');
+            game.Guess("Brother");
+            Assert.AreEqual(35, game.Score);
+        }
 
-        //[TestMethod]
-        //public void RunningOutOfAttemptsShouldScoreNegativeNumberOfUnrevealedLettersMultipliedByAllowedAttempts()
-        //{
-        //    Game game = new Game("Brother", 5, '*');
-        //    //Correct guesses
-        //    game.GuessLetter('b');
-        //    game.GuessLetter('r');
+        [TestMethod]
+        public void RunningOutOfAttemptsShouldScoreNegativeNumberOfUnrevealedLettersMultipliedByAllowedAttempts()
+        {
+            Game game = new Game("Brother", 5, '*');
+            //Correct guesses
+            game.GuessLetter('b');
+            game.GuessLetter('r');
 
-        //    //Incorrect guesses
-        //    game.Guess("braille");
-        //    game.GuessLetter('a');
-        //    game.GuessLetter('u');
-        //    game.GuessLetter('i');
-        //    game.GuessLetter('d');            
-        //    Assert.AreEqual(-25, game.Score);
-        //}
+            //Incorrect guesses
+            game.Guess("braille");
+            game.GuessLetter('a');
+            game.GuessLetter('u');
+            game.GuessLetter('i');
+            game.GuessLetter('d');
+            Assert.AreEqual(-20, game.Score);
+        }
 
         //[TestMethod]
         //public void GameIsOverWhenNoMoreRemainingAttemptsOrAllLettersAreRevealed() {
@@ -119,7 +120,7 @@ namespace HangmanTests
     //            RevealedState += letterMask;
     //        }
     //        RemainingAttempts = allowedAttempts;
-                
+
     //    }
 
     //    public bool GuessLetter(char guess)
@@ -129,7 +130,8 @@ namespace HangmanTests
 
     //        for (int i = 0; i < word.Length; i++)
     //        {
-    //            if (word[i] == guess) {
+    //            if (word[i] == guess)
+    //            {
     //                revealed[i] = guess;
     //                foundGuessInWord = true;
     //            }
@@ -148,12 +150,11 @@ namespace HangmanTests
 
     //    public String RevealedState { get; private set; }
 
-    //    //public bool Guess(string p)
-    //    //{
-    //    //    throw new NotImplementedException();
-    //    //}
+        //public bool Guess(string p)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-    //    //public int Score { get; set; }
-    //    //public bool IsOver { get; set; }
-    //}
-}
+        //public int Score { get; set; }
+        //public bool IsOver { get; set; }
+    }

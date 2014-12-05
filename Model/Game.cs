@@ -8,73 +8,98 @@ namespace Model
 {
     public class Game
     {
-        int allowedCount;
-        char mask;
-        string word;
-        char letter;
-        
-        
+        String word;
+        int allowedAttempts;
+        char letterMask;
 
-        public Game(string word, int allowedCount, char mask) {
+        public Game(String word, int allowedAttempts, char letterMask)
+        {
             this.word = word;
-            this.allowedCount = allowedCount;
-            this.mask = mask;
-        }
-
-        public string RevealedState{
-            get{
-
-                
-                char[] letters = word.ToCharArray();
-                for (int i = 0; i < letters.Length; i++)
-                {
-                    letters[i] = mask;
-                }
-                string maskedWord = new string(letters);
-
-                if (GuessLetter(letter) == true)
-                {
-                    string newWord = maskedWord.Replace(mask, letter);
-                    return newWord;
-                }
-
-                for (int i = allowedCount-1; i > 0; i--)
-                {
-                    if (GuessLetter(letter) == true)
-                    {
-
-                       newWord = newWord.Replace(mask, letter);
-                        return newWord;
-                    }
-                    else
-                    {
-                        return newWord;
-                    }
-                }
-            }
-        }
-
-        public int RemainingAttempts
-        {
-            get
+            this.allowedAttempts = allowedAttempts;
+            this.letterMask = letterMask;
+            RevealedState = String.Empty;
+            for (int i = 0; i < word.Length; i++)
             {
-                RemainingAttempts = allowedCount;
-                if (GuessLetter(letter) == false)
-                    {
-                        return i = i - 1;
-                    }
-                    else
-                        return i;
+                RevealedState += letterMask;
             }
+            RemainingAttempts = allowedAttempts;
+
         }
 
-        public bool GuessLetter(char letter)
+        public bool GuessLetter(char guess)
         {
-            this.letter = letter;
-             return word.IndexOf(letter) != -1;
+            char[] revealed = RevealedState.ToCharArray();
+            Boolean foundGuessInWord = false;
 
+            for (int i = 0; i < word.Length; i++)
+            {
+                if (char.ToUpperInvariant(word[i]) == char.ToUpperInvariant(guess))
+                {
+                    revealed[i] = word[i];
+                    foundGuessInWord = true;
+                }
+            }
+            if (!foundGuessInWord)
+            {
+                RemainingAttempts -= 1;
+                if (RemainingAttempts == 0)
+                {
+                    int unrevealedCount = 0;
+                    for (int i = 0; i < revealed.Length; i++)
+                    {                     
+                        if (revealed[i] == letterMask)
+                        {
+                             unrevealedCount = unrevealedCount + 1;
+                        }
+                    }
+
+                    Score = -unrevealedCount * allowedAttempts;
+                }
+            }
+
+            RevealedState = new string(revealed);
+
+            return foundGuessInWord;
         }
-    }
-    
 
+        public int RemainingAttempts { get; set; }
+
+        public String RevealedState { get; private set; }
+
+        public bool Guess(string guessWord)
+        {
+            char[] revealed = RevealedState.ToCharArray();
+            if (string.Equals(guessWord, word, StringComparison.CurrentCultureIgnoreCase))
+            {
+                RevealedState = word;
+                Score = word.Length * RemainingAttempts;
+                return true;
+            }
+            else
+            {
+                RemainingAttempts -= 1;
+                if (RemainingAttempts == 0)
+                {
+                    int unrevealedCount = 0;
+                    for (int i = 0; i < revealed.Length; i++)
+                    {
+                        if (revealed[i] == letterMask)
+                        {
+                            unrevealedCount = unrevealedCount + 1;
+                        }
+                    }
+
+                    Score = -unrevealedCount * allowedAttempts;
+                }
+                return false;
+            }
+
+            
+        }
+
+        public int Score { get; private set; }
+
+
+        public bool IsOver { get; set; }
+    }       
 }
