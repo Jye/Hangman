@@ -17,7 +17,7 @@ namespace HangmanWinForms
         Game currentGame;
         String[] nouns = File.ReadAllLines("nouns.txt");
         Random rnd = new Random();
-        readonly int MAX_GUESSES = 5;
+        readonly int MAX_GUESSES = 7;
         readonly char MASK_CHAR = '*';
             
         public MainForm()
@@ -34,11 +34,12 @@ namespace HangmanWinForms
 
         private void SyncFrom(Game currentGame)
         {
-            remainingGuessesLabel.Text = currentGame.RemainingAttempts;
+            remainingGuessesLabel.Text = currentGame.RemainingAttempts.ToString();
             revealedLabel.Text = currentGame.RevealedState;
             if (currentGame.IsOver)
             {
-                scoreLabel.Text = currentGame.Score;
+                scoreLabel.Text = currentGame.Score.ToString();
+                revealedLabel.Text = currentGame.Word;
             }
         }
 

@@ -8,13 +8,13 @@ namespace Model
 {
     public class Game
     {
-        String word;
+        
         int allowedAttempts;
         char letterMask;
 
         public Game(String word, int allowedAttempts, char letterMask)
         {
-            this.word = word;
+            this.Word = word;
             this.allowedAttempts = allowedAttempts;
             this.letterMask = letterMask;
             RevealedState = String.Empty;
@@ -31,11 +31,11 @@ namespace Model
             char[] revealed = RevealedState.ToCharArray();
             Boolean foundGuessInWord = false;
 
-            for (int i = 0; i < word.Length; i++)
+            for (int i = 0; i < Word.Length; i++)
             {
-                if (char.ToUpperInvariant(word[i]) == char.ToUpperInvariant(guess))
+                if (char.ToUpperInvariant(Word[i]) == char.ToUpperInvariant(guess))
                 {
-                    revealed[i] = word[i];
+                    revealed[i] = Word[i];
                     foundGuessInWord = true;
                 }
             }
@@ -69,10 +69,10 @@ namespace Model
         public bool Guess(string guessWord)
         {
             char[] revealed = RevealedState.ToCharArray();
-            if (string.Equals(guessWord, word, StringComparison.CurrentCultureIgnoreCase))
+            if (string.Equals(guessWord, Word, StringComparison.CurrentCultureIgnoreCase))
             {
-                RevealedState = word;
-                Score = word.Length * RemainingAttempts;
+                RevealedState = Word;
+                Score = Word.Length * RemainingAttempts;
                 return true;
             }
             else
@@ -100,6 +100,18 @@ namespace Model
         public int Score { get; private set; }
 
 
-        public bool IsOver { get; set; }
-    }       
+        public bool IsOver
+        {
+            get
+            {
+                return RemainingAttempts == 0 || RevealedState == Word;
+            }
+        }
+        public String Word 
+        {
+            get; 
+            private set;
+        }
+    }
+     
 }
