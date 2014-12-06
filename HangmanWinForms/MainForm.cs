@@ -34,11 +34,11 @@ namespace HangmanWinForms
 
         private void SyncFrom(Game currentGame)
         {
-            remainingGuessesLabel.Text = currentGame.RemainingAttempts;
+            remainingGuessesLabel.Text = currentGame.RemainingAttempts.ToString();
             revealedLabel.Text = currentGame.RevealedState;
             if (currentGame.IsOver)
             {
-                scoreLabel.Text = currentGame.Score;
+                scoreLabel.Text = currentGame.Score.ToString();
             }
         }
 

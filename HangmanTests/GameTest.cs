@@ -90,18 +90,19 @@ namespace HangmanTests
             Assert.AreEqual(-20, game.Score);
         }
 
-        //[TestMethod]
-        //public void GameIsOverWhenNoMoreRemainingAttemptsOrAllLettersAreRevealed() {
-        //    Game losingGame = new Game("Brother", 3, '*');
-        //    losingGame.Guess("braille");
-        //    losingGame.GuessLetter('a');
-        //    losingGame.GuessLetter('u');
-        //    Assert.IsTrue(losingGame.IsOver);
+        [TestMethod]
+        public void GameIsOverWhenNoMoreRemainingAttemptsOrAllLettersAreRevealed()
+        {
+            Game losingGame = new Game("Brother", 3, '*');
+            losingGame.Guess("braille");
+            losingGame.GuessLetter('a');
+            losingGame.GuessLetter('u');
+            Assert.IsTrue(losingGame.IsOver);
 
-        //    Game winningGame = new Game("Bubble", 3, '*');
-        //    winningGame.Guess("bubble");
-        //    Assert.IsTrue(winningGame.IsOver);
-        //}
+            Game winningGame = new Game("Bubble", 3, '*');
+            winningGame.Guess("bubble");
+            Assert.IsTrue(winningGame.IsOver);
+        }
     }
 
 

@@ -100,6 +100,11 @@ namespace Model
         public int Score { get; private set; }
 
 
-        public bool IsOver { get; set; }
+        public bool IsOver {
+            get 
+            {
+               return  ((RemainingAttempts == 0) || (RevealedState == word));
+            }
+        }
     }       
 }
