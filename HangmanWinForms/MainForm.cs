@@ -39,6 +39,7 @@ namespace HangmanWinForms
             if (currentGame.IsOver)
             {
                 scoreLabel.Text = currentGame.Score.ToString();
+                revealedLabel.Text = currentGame.Word;
             }
         }
 
